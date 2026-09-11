@@ -1,165 +1,47 @@
 [
   {
-    "id": "example-automation-001",
+    "id": "00000000-0000-4000-8000-000000000001",
     "metadata": {
-      "user_id": "anonymous-user-001",
-      "automation_id": "automation-001"
+      "user_id": "anonymous_user_001",
+      "automation_id": "example_automation_001"
     },
     "automation": {
-      "yaml": "alias: Turn on the hallway light at sunset\ntrigger:\n  - platform: sun\n    event: sunset\naction:\n  - service: light.turn_on\n    target:\n      entity_id: light.example_hallway\n",
+      "yaml": "- id: example_automation_001\n  alias: 3D Print Done\n  initial_state: true\n  trigger:\n    trigger: state\n    entity_id: binary_sensor.example_3d_printer_printing\n    from: 'on'\n    to: 'off'\n  action:\n  - action: secret notification_service\n    data:\n      message: 3D Print Complete",
       "config": [
         {
-          "name": "Hallway light",
-          "room": "hallway",
-          "type": "light",
-          "id": {
-            "entity_id": "light.example_hallway",
-            "device_id": "synthetic-device-001"
-          }
-        }
-      ],
-      "features": {
-        "entity_types": ["light"],
-        "service_types": ["light.turn_on"],
-        "rooms": ["hallway"],
-        "complexity": "simple"
-      }
-    },
-    "annotations": {
-      "functional": {
-        "natural_language": {
-          "trigger": "At sunset.",
-          "conditions": "No additional conditions.",
-          "action": "Turn on the hallway light."
-        },
-        "human_like": "Turn on the hallway light at sunset.",
-        "structured_description": "A sunset trigger activates one hallway light."
-      },
-      "security": {
-        "description": "No security issue identified in this synthetic example.",
-        "category": "none",
-        "subcategory": null,
-        "error_type": "none",
-        "severity": "none"
-      },
-      "goals": {
-        "goal_classes": [
-          {
-            "label": "comfort",
-            "confidence": 1.0,
-            "rationale": "The automation provides ambient lighting automatically."
-          }
-        ],
-        "action_modalities": [
-          {
-            "label": "visual",
-            "confidence": 1.0,
-            "rationale": "The action changes a light."
-          }
-        ]
-      }
-    }
-  },
-  {
-    "id": "example-automation-002",
-    "metadata": {
-      "user_id": "anonymous-user-002",
-      "automation_id": "automation-002"
-    },
-    "automation": {
-      "yaml": "alias: Notify when a window opens while away\ntrigger:\n  - platform: state\n    entity_id: binary_sensor.example_window\n    to: 'on'\ncondition:\n  - condition: state\n    entity_id: person.example_resident\n    state: not_home\naction:\n  - service: notify.mobile_app_example_phone\n    data:\n      message: A window was opened while nobody was home.\n",
-      "config": [
-        {
-          "name": "Window sensor",
-          "room": "living_room",
+          "name": "example 3d printer printing",
+          "room": "unknown",
           "type": "binary_sensor",
           "id": {
-            "entity_id": "binary_sensor.example_window",
-            "device_id": "synthetic-device-002"
+            "entity_id": "binary_sensor.example_3d_printer_printing",
+            "device_id": null
           }
         }
       ],
       "features": {
-        "entity_types": ["binary_sensor", "person"],
-        "service_types": ["notify.mobile_app"],
-        "rooms": ["living_room"],
-        "complexity": "medium"
-      }
-    },
-    "annotations": {
-      "functional": {
-        "natural_language": {
-          "trigger": "When the living-room window opens.",
-          "conditions": "Only while the resident is away.",
-          "action": "Send a mobile notification."
-        },
-        "human_like": "Alert the resident if a window opens while the home is empty.",
-        "structured_description": "A window state change sends a notification when the resident is away."
-      },
-      "security": {
-        "description": "The notification supports awareness of unexpected access.",
-        "category": "monitoring",
-        "subcategory": "intrusion_awareness",
-        "error_type": "none",
-        "severity": "none"
-      },
-      "goals": {
-        "goal_classes": [
-          {
-            "label": "security",
-            "confidence": 1.0,
-            "rationale": "The automation reports an unexpected opening while the home is empty."
-          }
+        "entity_types": [
+          "binary_sensor"
         ],
-        "action_modalities": [
-          {
-            "label": "notification",
-            "confidence": 1.0,
-            "rationale": "The action sends a message to a mobile device."
-          }
-        ]
-      }
-    }
-  },
-  {
-    "id": "example-automation-003",
-    "metadata": {
-      "user_id": "anonymous-user-003",
-      "automation_id": "automation-003"
-    },
-    "automation": {
-      "yaml": "alias: Reduce heating when a bedroom window is open\ntrigger:\n  - platform: state\n    entity_id: binary_sensor.example_bedroom_window\n    to: 'on'\n    for: '00:05:00'\naction:\n  - service: climate.set_temperature\n    target:\n      entity_id: climate.example_bedroom\n    data:\n      temperature: 16\n",
-      "config": [
-        {
-          "name": "Bedroom thermostat",
-          "room": "bedroom",
-          "type": "climate",
-          "id": {
-            "entity_id": "climate.example_bedroom",
-            "device_id": "synthetic-device-003"
-          }
-        }
-      ],
-      "features": {
-        "entity_types": ["binary_sensor", "climate"],
-        "service_types": ["climate.set_temperature"],
-        "rooms": ["bedroom"],
-        "complexity": "medium"
+        "service_types": [],
+        "rooms": [
+          "unknown"
+        ],
+        "complexity": "low"
       }
     },
     "annotations": {
       "functional": {
         "natural_language": {
-          "trigger": "When the bedroom window remains open for five minutes.",
-          "conditions": "No additional conditions.",
-          "action": "Lower the bedroom heating set point."
+          "trigger": "When the example 3D printer printing [binary_sensor.example_3d_printer_printing] sensor changes its state from 'on' (printing) to 'off' (not printing).",
+          "conditions": "None",
+          "action": "Sends a notification via an anonymized notification service with the message '3D Print Complete'."
         },
-        "human_like": "Reduce bedroom heating if the window stays open.",
-        "structured_description": "A prolonged open-window state lowers the thermostat set point."
+        "human_like": "Sends a notification when the 3D printer finishes a job.",
+        "structured_description": "TRIGGER: When example 3D printer printing [binary_sensor.example_3d_printer_printing] changes from on to off. CONDITIONS: None. ACTIONS: Send a notification through an anonymized service with the text '3D Print Complete'."
       },
       "security": {
-        "description": "No security issue identified in this synthetic example.",
-        "category": "none",
+        "description": "The rule only reports the operational status of a 3D printer and does not involve personal data or security-relevant devices. It introduces no physical, privacy, or cybersecurity risk.",
+        "category": "harmless",
         "subcategory": null,
         "error_type": "none",
         "severity": "none"
@@ -167,60 +49,66 @@
       "goals": {
         "goal_classes": [
           {
-            "label": "energy_efficiency",
-            "confidence": 1.0,
-            "rationale": "The automation reduces heating while a window is open."
+            "label": "Appliance and cleaning management",
+            "confidence": "high",
+            "rationale": "The automation monitors a 3D printer (an appliance) and notifies the user when a print job is complete. The user-facing purpose is to inform about the appliance's cycle status."
           }
         ],
         "action_modalities": [
           {
-            "label": "environmental_control",
-            "confidence": 1.0,
-            "rationale": "The action changes a thermostat setting."
+            "label": "Notification and messaging",
+            "confidence": "high",
+            "rationale": "The action sends the message '3D Print Complete' through an anonymized textual notification channel."
           }
         ]
       }
     }
   },
   {
-    "id": "example-automation-004",
+    "id": "00000000-0000-4000-8000-000000000002",
     "metadata": {
-      "user_id": "anonymous-user-004",
-      "automation_id": "automation-004"
+      "user_id": "anonymous_user_002",
+      "automation_id": "example_automation_002"
     },
     "automation": {
-      "yaml": "alias: Turn off the kitchen plug at night\ntrigger:\n  - platform: time\n    at: '23:30:00'\naction:\n  - service: switch.turn_off\n    target:\n      entity_id: switch.example_kitchen_plug\n",
+      "yaml": "- id: example_automation_002\n  alias: Air Quality - Alert for Good Conditions\n  initial_state: true\n  trigger:\n  - trigger: state\n    entity_id: input_select.example_air_quality_state\n    to: Good\n  actions:\n  - action: script.example_air_purifier_auto",
       "config": [
         {
-          "name": "Kitchen plug",
-          "room": "kitchen",
-          "type": "switch",
+          "name": "example air quality state",
+          "room": "virtual",
+          "type": "input_select",
           "id": {
-            "entity_id": "switch.example_kitchen_plug",
-            "device_id": "synthetic-device-004"
+            "entity_id": "input_select.example_air_quality_state",
+            "device_id": null
           }
         }
       ],
       "features": {
-        "entity_types": ["switch"],
-        "service_types": ["switch.turn_off"],
-        "rooms": ["kitchen"],
-        "complexity": "simple"
+        "entity_types": [
+          "input_select"
+        ],
+        "service_types": [
+          "script"
+        ],
+        "rooms": [
+          "virtual"
+        ],
+        "complexity": "low"
       }
     },
     "annotations": {
       "functional": {
         "natural_language": {
-          "trigger": "Every day at 23:30.",
-          "conditions": "No additional conditions.",
-          "action": "Turn off the kitchen plug."
+          "trigger": "When the example air quality state [input_select.example_air_quality_state] changes to 'Good'.",
+          "conditions": "None",
+          "action": "Runs the anonymized script named 'example_air_purifier_auto'."
         },
-        "human_like": "Turn off the kitchen plug every night.",
-        "structured_description": "A fixed nightly schedule turns off one smart plug."
+        "human_like": "When the air quality is reported as good, it automatically runs a script to set the air purifier to auto mode.",
+        "structured_description": "TRIGGER: When example air quality state [input_select.example_air_quality_state] changes to Good. CONDITIONS: None. ACTIONS: Execute script example_air_purifier_auto."
       },
       "security": {
-        "description": "No security issue identified in this synthetic example.",
-        "category": "none",
+        "description": "The automation only adjusts an indoor appliance based on environmental data. It does not expose personal data, affect physical security, or introduce cybersecurity risks.",
+        "category": "harmless",
         "subcategory": null,
         "error_type": "none",
         "severity": "none"
@@ -228,16 +116,93 @@
       "goals": {
         "goal_classes": [
           {
-            "label": "energy_efficiency",
-            "confidence": 1.0,
-            "rationale": "The automation avoids unnecessary overnight power use."
+            "label": "Environmental comfort",
+            "confidence": "high",
+            "rationale": "The automation triggers when the air quality state becomes 'Good' and runs a script to set the air purifier to auto mode. The purpose is to maintain or adjust indoor environmental comfort based on air quality."
           }
         ],
         "action_modalities": [
           {
-            "label": "device_control",
-            "confidence": 1.0,
-            "rationale": "The action turns off a smart plug."
+            "label": "Scene or routine activation",
+            "confidence": "high",
+            "rationale": "The automation's action is to run a predefined, anonymized air-purifier routine."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "00000000-0000-4000-8000-000000000003",
+    "metadata": {
+      "user_id": "anonymous_user_003",
+      "automation_id": "example_automation_003"
+    },
+    "automation": {
+      "yaml": "- alias: 'iOS: toggle example office lights'\n  initial_state: true\n  triggers:\n  - trigger: event\n    event_type: ios.action_fired\n    event_data:\n      actionName: Example Office\n  actions:\n  - action: light.toggle\n    target:\n      entity_id: light.example_office_lamps",
+      "config": [
+        {
+          "name": "example office lamps",
+          "room": "office",
+          "type": "light",
+          "id": {
+            "entity_id": "light.example_office_lamps",
+            "device_id": null
+          }
+        },
+        {
+          "name": "example office",
+          "room": "office",
+          "type": "light",
+          "id": {
+            "entity_id": "light.example_office",
+            "device_id": null
+          }
+        }
+      ],
+      "features": {
+        "entity_types": [
+          "light",
+          "light"
+        ],
+        "service_types": [
+          "light"
+        ],
+        "rooms": [
+          "office"
+        ],
+        "complexity": "low"
+      }
+    },
+    "annotations": {
+      "functional": {
+        "natural_language": {
+          "trigger": "When the anonymized iOS action named 'Example Office' is triggered from a mobile device.",
+          "conditions": "None",
+          "action": "Toggles the example office lamps [light.example_office_lamps] on or off."
+        },
+        "human_like": "Toggles the office lights when the 'Example Office' action is tapped on an iOS device.",
+        "structured_description": "TRIGGER: When an iOS action named 'Example Office' is fired. CONDITIONS: None. ACTIONS: Toggle example office lamps [light.example_office_lamps]."
+      },
+      "security": {
+        "description": "The rule only toggles indoor lighting and is triggered manually via an iOS action. It does not expose personal data or affect any security-sensitive systems.",
+        "category": "harmless",
+        "subcategory": null,
+        "error_type": "none",
+        "severity": "none"
+      },
+      "goals": {
+        "goal_classes": [
+          {
+            "label": "Lighting comfort",
+            "confidence": "high",
+            "rationale": "The automation toggles office lights in response to a user action, directly serving lighting convenience and comfort."
+          }
+        ],
+        "action_modalities": [
+          {
+            "label": "Device actuation",
+            "confidence": "high",
+            "rationale": "The automation directly changes the physical state of the office lights by toggling them on or off."
           }
         ]
       }
